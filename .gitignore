@@ -1,0 +1,6 @@
+# Log de sessao gerado em tempo de execucao por src/sistema.py
+data/log_sessao.txt
+
+# Artefatos Python
+__pycache__/
+*.pyc

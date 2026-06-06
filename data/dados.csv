@@ -1,0 +1,49 @@
+# ============================================================
+# ARES-1 HABITAT MONITORING SYSTEM - TELEMETRIA SIMULADA
+# Missao: Habitat cientifico em Marte - Ciclo operacional 6
+# Arquivo lido por src/sistema.py via funcao carregar_dados()
+# O parser ignora linhas iniciadas por '#' e linhas em branco.
+# ============================================================
+
+# SECAO 1 - MODULOS CRITICOS (status binario 0=falha/offline, 1=operante)
+[MODULOS]
+modulo,status
+suporte_vida,1
+energia,1
+comunicacao,0
+habitat,1
+laboratorio,1
+armazenamento,1
+
+# SECAO 2 - LEITURAS DE ENERGIA POR CICLO (geracao, consumo, reserva %)
+[ENERGIA]
+ciclo,geracao_kWh,consumo_kWh,reserva_pct
+1,45,60,72
+2,40,65,65
+3,30,70,52
+4,20,75,38
+5,15,78,24
+6,10,80,12
+
+# SECAO 3 - VARIAVEIS AMBIENTAIS (valor instantaneo no ciclo 6)
+[AMBIENTE]
+variavel,valor,unidade
+temperatura_interna,21.5,C
+temperatura_externa,-63.0,C
+radiacao,8.7,mSv/h
+qualidade_comunicacao,34,pct
+velocidade_vento,112,km/h
+pressao_interna,-999,kPa
+
+# SECAO 4 - LOG DE EVENTOS DA SESSAO (ordem cronologica)
+[EVENTOS]
+timestamp,tipo,descricao
+2026-06-01T06:00,INFO,Sistema ARES-1 inicializado
+2026-06-01T07:15,ALERTA,Tempestade de areia detectada - visibilidade reduzida
+2026-06-01T08:30,CRITICO,Painel solar A danificado - geracao reduzida 55%
+2026-06-01T09:00,INFO,Modo economia de energia ativado
+2026-06-01T10:45,ALERTA,Sensor de radiacao registrou pico acima do limite
+2026-06-01T11:00,CRITICO,Falha no modulo de comunicacao primario
+2026-06-01T12:30,INFO,Sistema de backup de comunicacao ativado (degradado)
+2026-06-01T13:00,ALERTA,Reserva de energia abaixo de 40 por cento
+2026-06-01T14:00,ERRO,Leitura inconsistente: sensor de pressao reportou -999 kPa

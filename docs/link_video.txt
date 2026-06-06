@@ -1,0 +1,7 @@
+https://youtu.be/SUBSTITUIR-PELO-ID-DO-VIDEO
+
+# Instrucoes:
+# 1. Grave a apresentacao de ate 4 minutos (roteiro em docs/roteiro_video.md).
+# 2. Publique no YouTube com visibilidade "Nao listado".
+# 3. Cole aqui o link exato do video, removendo estas linhas de instrucao.
+# 4. Atualize tambem a secao 8 do README.md com o mesmo link.

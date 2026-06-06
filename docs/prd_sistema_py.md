@@ -6,11 +6,11 @@
 
 ## 1. Visão Geral
 
-**Nome do sistema:** ARES-1 HMS (Habitat Monitoring System)  
-**Arquivo principal:** `src/sistema.py`  
-**Execução:** `python src/sistema.py` — totalmente automático, sem interação do usuário  
-**Dados:** lidos de `data/dados.csv` no início da execução  
-**Saída:** relatório completo impresso no terminal, seção por seção  
+**Nome do sistema:** ARES-1 HMS (Habitat Monitoring System)
+**Arquivo principal:** `src/sistema.py`
+**Execução:** `python src/sistema.py` — totalmente automático, sem interação do usuário
+**Dados:** lidos de `data/dados.csv` no início da execução
+**Saída:** relatório completo impresso no terminal, seção por seção
 **Dependências externas:** nenhuma (somente biblioteca padrão do Python)
 
 ---
@@ -30,8 +30,8 @@ e a lógica de decisão mais defensável na apresentação.
 
 ## 3. Fonte de Dados
 
-**Arquivo:** `data/dados.csv`  
-**Leitura:** função dedicada `carregar_dados(caminho)` usando módulo `csv` nativo  
+**Arquivo:** `data/dados.csv`
+**Leitura:** função dedicada `carregar_dados(caminho)` usando módulo `csv` nativo
 **Tratamento de erros:** se o arquivo não existir ou tiver linha corrompida,
 o sistema exibe aviso e encerra com mensagem clara
 
@@ -113,13 +113,13 @@ Sem bibliotecas externas — implementadas com listas e métodos nativos:
 ```python
 # Fila (FIFO)
 fila_alertas = []
-fila_alertas.append(alerta)      # enqueue
-fila_alertas.pop(0)              # dequeue
+fila_alertas.append(alerta) # enqueue
+fila_alertas.pop(0) # dequeue
 
 # Pilha (LIFO)
 pilha_eventos_criticos = []
-pilha_eventos_criticos.append(evento)   # push
-pilha_eventos_criticos.pop()            # pop
+pilha_eventos_criticos.append(evento) # push
+pilha_eventos_criticos.pop() # pop
 ```
 
 ---
@@ -128,20 +128,20 @@ pilha_eventos_criticos.pop()            # pop
 
 ```python
 areas_missao = {
-    "vida": {
-        "suporte_vida": modulos["suporte_vida"]
-    },
-    "energia": {
-        "energia": modulos["energia"]
-    },
-    "comunicacao": {
-        "comunicacao": modulos["comunicacao"]
-    },
-    "habitat": {
-        "habitat":       modulos["habitat"],
-        "laboratorio":   modulos["laboratorio"],
-        "armazenamento": modulos["armazenamento"]
-    }
+ "vida": {
+ "suporte_vida": modulos["suporte_vida"]
+ },
+ "energia": {
+ "energia": modulos["energia"]
+ },
+ "comunicacao": {
+ "comunicacao": modulos["comunicacao"]
+ },
+ "habitat": {
+ "habitat": modulos["habitat"],
+ "laboratorio": modulos["laboratorio"],
+ "armazenamento": modulos["armazenamento"]
+ }
 }
 ```
 
@@ -152,40 +152,40 @@ areas_missao = {
 ### Estado da missão: CRÍTICO
 ```python
 estado == "CRITICO" if (
-    modulos["suporte_vida"] == 0
-    or modulos["energia"] == 0
-    or (reserva_energia < 20 and modulos["comunicacao"] == 0)
-    or (radiacao > 8.0 and reserva_energia < 30)
+ modulos["suporte_vida"] == 0
+ or modulos["energia"] == 0
+ or (reserva_energia < 20 and modulos["comunicacao"] == 0)
+ or (radiacao > 8.0 and reserva_energia < 30)
 )
 ```
 
 ### Estado da missão: ALERTA
 ```python
 estado == "ALERTA" if (
-    not estado == "CRITICO"
-    and (
-        reserva_energia < 40
-        or modulos["comunicacao"] == 0
-        or radiacao > 5.0
-        or temperatura_interna < 18 or temperatura_interna > 28
-        or inconsistencia_detectada
-    )
+ not estado == "CRITICO"
+ and (
+ reserva_energia < 40
+ or modulos["comunicacao"] == 0
+ or radiacao > 5.0
+ or temperatura_interna < 18 or temperatura_interna > 28
+ or inconsistencia_detectada
+ )
 )
 ```
 
 ### Estado da missão: NORMAL
 ```python
 estado == "NORMAL" if (
-    not estado == "CRITICO"
-    and not estado == "ALERTA"
+ not estado == "CRITICO"
+ and not estado == "ALERTA"
 )
 ```
 
 **Expressão booleana principal (para o README):**
 ```
 CRITICO = (suporte_vida == 0) OR (energia == 0) OR
-          (reserva < 20 AND comunicacao == 0) OR
-          (radiacao > 8.0 AND reserva < 30)
+ (reserva < 20 AND comunicacao == 0) OR
+ (radiacao > 8.0 AND reserva < 30)
 ```
 
 Cada regra será comentada no código explicando a lógica operacional por trás dela.
@@ -194,15 +194,15 @@ Cada regra será comentada no código explicando a lógica operacional por trás
 
 ## 7. Sistema de Alertas Automáticos
 
-Alertas gerados automaticamente e inseridos na `fila_alertas`.  
+Alertas gerados automaticamente e inseridos na `fila_alertas`.
 Cada alerta é um dicionário:
 
 ```python
 {
-    "severidade": "CRITICO",          # NORMAL | ALERTA | CRITICO
-    "modulo": "comunicacao",
-    "descricao": "Módulo de comunicação offline.",
-    "acao": "Ativar sistema de backup e priorizar contato com a Terra."
+ "severidade": "CRITICO", # NORMAL | ALERTA | CRITICO
+ "modulo": "comunicacao",
+ "descricao": "Módulo de comunicação offline.",
+ "acao": "Ativar sistema de backup e priorizar contato com a Terra."
 }
 ```
 
@@ -232,11 +232,11 @@ Duas técnicas implementadas manualmente (sem NumPy/Pandas).
 
 ```python
 def media_movel(serie, janela=3):
-    resultado = []
-    for i in range(len(serie) - janela + 1):
-        media = sum(serie[i:i+janela]) / janela
-        resultado.append(media)
-    return resultado
+ resultado = []
+ for i in range(len(serie) - janela + 1):
+ media = sum(serie[i:i+janela]) / janela
+ resultado.append(media)
+ return resultado
 ```
 
 Uso: suavizar a série de reserva de energia para identificar tendência real,
@@ -246,14 +246,14 @@ eliminando ruído de ciclo a ciclo.
 
 ```python
 def regressao_linear(x, y):
-    n = len(x)
-    sum_x  = sum(x)
-    sum_y  = sum(y)
-    sum_xy = sum(x[i] * y[i] for i in range(n))
-    sum_x2 = sum(xi ** 2 for xi in x)
-    b = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x ** 2)
-    a = (sum_y - b * sum_x) / n
-    return a, b   # y = a + b*x
+ n = len(x)
+ sum_x = sum(x)
+ sum_y = sum(y)
+ sum_xy = sum(x[i] * y[i] for i in range(n))
+ sum_x2 = sum(xi ** 2 for xi in x)
+ b = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x ** 2)
+ a = (sum_y - b * sum_x) / n
+ return a, b # y = a + b*x
 ```
 
 Uso: extrapolar a reserva de energia para os próximos 3 ciclos.
@@ -263,11 +263,11 @@ Uso: extrapolar a reserva de energia para os próximos 3 ciclos.
 ```
 === PREVISAO DE RESERVA DE ENERGIA ===
 Tecnica 1 — Media Movel (janela 3 ciclos):
-  Tendencia atual: -12.3 pp por ciclo
+ Tendencia atual: -12.3 pp por ciclo
 
 Tecnica 2 — Regressao Linear:
-  Equacao: reserva = 85.4 - 12.1 * ciclo
-  Ciclo 7: ~0.7%  |  Ciclo 8: -11.4% (esgotamento previsto)
+ Equacao: reserva = 85.4 - 12.1 * ciclo
+ Ciclo 7: ~0.7% | Ciclo 8: -11.4% (esgotamento previsto)
 
 DECISAO INFLUENCIADA: Estado elevado para CRITICO.
 Recomendacao: desligar laboratorio imediatamente e
@@ -280,30 +280,30 @@ redistribuir energia para suporte de vida e comunicacao.
 
 ```
 1. carregar_dados()
-      └─ Lê dados.csv, popula todas as estruturas
+ └─ Lê dados.csv, popula todas as estruturas
 
 2. detectar_inconsistencias()
-      └─ Valida ranges físicos, gera alertas para anomalias
+ └─ Valida ranges físicos, gera alertas para anomalias
 
 3. classificar_modulos()
-      └─ Monta tabela de status dos 6 módulos
+ └─ Monta tabela de status dos 6 módulos
 
 4. gerar_alertas()
-      └─ Avalia todas as condições, popula fila_alertas
+ └─ Avalia todas as condições, popula fila_alertas
 
 5. classificar_estado_missao()
-      └─ Aplica regras booleanas → NORMAL / ALERTA / CRITICO
+ └─ Aplica regras booleanas → NORMAL / ALERTA / CRITICO
 
 6. executar_forecasting()
-      └─ Média móvel + regressão linear na reserva de energia
-      └─ Resultado pode elevar o estado da missão
+ └─ Média móvel + regressão linear na reserva de energia
+ └─ Resultado pode elevar o estado da missão
 
 7. gerar_recomendacoes()
-      └─ Baseadas no estado final + alertas críticos pendentes
+ └─ Baseadas no estado final + alertas críticos pendentes
 
 8. exibir_relatorio()
-      └─ Imprime tudo formatado no terminal, seção por seção
-      └─ Exporta log da sessão para data/log_sessao.txt
+ └─ Imprime tudo formatado no terminal, seção por seção
+ └─ Exporta log da sessão para data/log_sessao.txt
 ```
 
 ---
@@ -312,8 +312,8 @@ redistribuir energia para suporte de vida e comunicacao.
 
 ```
 ╔══════════════════════════════════════════════════════╗
-║         ARES-1 HABITAT MONITORING SYSTEM             ║
-║         Missão: Habitat em Marte — Ciclo 6           ║
+║ ARES-1 HABITAT MONITORING SYSTEM ║
+║ Missão: Habitat em Marte — Ciclo 6 ║
 ╚══════════════════════════════════════════════════════╝
 
 [1/7] CARREGAMENTO DE DADOS
@@ -325,7 +325,7 @@ redistribuir energia para suporte de vida e comunicacao.
 [7/7] DIAGNOSTICO FINAL E RECOMENDACOES
 ```
 
-Separadores ASCII claros entre seções. Tabelas alinhadas com espaços.  
+Separadores ASCII claros entre seções. Tabelas alinhadas com espaços.
 Estado final em destaque: `*** ESTADO DA MISSAO: CRITICO ***`
 
 ---
@@ -353,22 +353,22 @@ Estado final em destaque: `*** ESTADO DA MISSAO: CRITICO ***`
 
 | Requisito do brief | Solução |
 |---|---|
-| 6+ módulos críticos com binário | ✅ 6 módulos no CSV |
-| 6+ leituras de energia | ✅ 6 ciclos no CSV |
-| Variáveis ambientais | ✅ temperatura, radiação, vento, pressão, comunicação |
-| Log com 8+ eventos | ✅ 9 eventos incluindo inconsistência |
-| Inconsistência intencional | ✅ pressão -999 kPa detectada e documentada |
-| Lista | ✅ historico_energia, leituras_ambientais |
-| Fila | ✅ fila_alertas (FIFO com list + append/pop(0)) |
-| Pilha | ✅ pilha_eventos_criticos (LIFO com list + append/pop()) |
-| Dicionário | ✅ modulos, cada alerta, cada evento |
-| Hierarquia | ✅ areas_missao (dict de dicts) |
-| Matriz | ✅ matriz_leituras (lista de listas) |
-| if/elif/else | ✅ em classificar_estado_missao e gerar_alertas |
-| and/or/not em 3+ regras | ✅ nas 3 regras de diagnóstico |
-| Expressão booleana no README | ✅ documentada na seção 6 deste PRD |
-| Alertas com severidade + descrição + ação | ✅ dicionário por alerta |
-| Forecasting sem bibliotecas avançadas | ✅ média móvel + regressão linear manuais |
-| Previsão influencia decisão | ✅ estado pode ser elevado para CRITICO |
-| Leitura de arquivo externo | ✅ CSV lido por carregar_dados() |
-| Sem dependências externas | ✅ somente biblioteca padrão |
+| 6+ módulos críticos com binário | 6 módulos no CSV |
+| 6+ leituras de energia | 6 ciclos no CSV |
+| Variáveis ambientais | temperatura, radiação, vento, pressão, comunicação |
+| Log com 8+ eventos | 9 eventos incluindo inconsistência |
+| Inconsistência intencional | pressão -999 kPa detectada e documentada |
+| Lista | historico_energia, leituras_ambientais |
+| Fila | fila_alertas (FIFO com list + append/pop(0)) |
+| Pilha | pilha_eventos_criticos (LIFO com list + append/pop()) |
+| Dicionário | modulos, cada alerta, cada evento |
+| Hierarquia | areas_missao (dict de dicts) |
+| Matriz | matriz_leituras (lista de listas) |
+| if/elif/else | em classificar_estado_missao e gerar_alertas |
+| and/or/not em 3+ regras | nas 3 regras de diagnóstico |
+| Expressão booleana no README | documentada na seção 6 deste PRD |
+| Alertas com severidade + descrição + ação | dicionário por alerta |
+| Forecasting sem bibliotecas avançadas | média móvel + regressão linear manuais |
+| Previsão influencia decisão | estado pode ser elevado para CRITICO |
+| Leitura de arquivo externo | CSV lido por carregar_dados() |
+| Sem dependências externas | somente biblioteca padrão |
