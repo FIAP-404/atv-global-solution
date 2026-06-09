@@ -121,7 +121,6 @@ Previsao (regressao): reserva = 87.5 - 12.5 * ciclo  ->  Ciclo 7 ~= 0.1%
 ## 8. Link do vídeo (YouTube – Não Listado)
 
 > O link final está em [`docs/link_video.txt`](docs/link_video.txt).
-> _Substituir pelo link real após a publicação._
 
 ## 9. Conclusões e aprendizados
 
